@@ -55,15 +55,13 @@
 		<p>Aceste 2 mulțimi se pot obține folosind tool-urile deja discutate însă este destul de costisitor la nivel de timp. O soluție mai elegantă este prezentată în secțiunea următoare unde de la o mulțime de puncte putem genera oricâte mulțimi de puncte paralele la mulțimea inițială (paralelism la nivel de segmente).</p>
 		<br/>
 		<p>=== Generare puncte pistă ===</p>
- 	+	
- 	+	<​note>​
- 	+	Explicația care urmează este o recomandare de generare a geometriei pistei, dar aceasta poate fi realizată în orice fel, atât timp cât sunt respectate cele 2 criterii.
- 	+	</​note>​
- 	+	
- 	+	Să presupunem că avem 2 puncte consecutive P1(x1, 0, z1), P2(x2, 0, z2) din mulțimea de puncte care definește traseul:
- 	+	  - se determină vectorul direcție de la P1 către P2 notat D (negru in poza).
- 	+	  - se determină vectorul perpendicular la D notat P (verde in poza): P = cross(D, UP), UP fiind vectorul perpendicular la planul XOZ.
- 	+	  - folosind vectorul P și P1 putem să obtinem punctele exterioare / interioare (Roșu și Albastru): R = P1 + distRoșu * P, A = P1 - distAlbastru * P.
+		<br/>
+		<p>Explicația care urmează este o recomandare de generare a geometriei pistei, dar aceasta poate fi realizată în orice fel, atât timp cât sunt respectate cele 2 criterii.</p>
+		<br/>
+		<p>Să presupunem că avem 2 puncte consecutive P1(x1, 0, z1), P2(x2, 0, z2) din mulțimea de puncte care definește traseul:</p>
+		<p>- se determină vectorul direcție de la P1 către P2 notat D (negru in poza).</p>
+		<p>- se determină vectorul perpendicular la D notat P (verde in poza): P = cross(D, UP), UP fiind vectorul perpendicular la planul XOZ.</p>
+		<p>- folosind vectorul P și P1 putem să obtinem punctele exterioare / interioare (Roșu și Albastru): R = P1 + distRoșu * P, A = P1 - distAlbastru * P.</p>
  	+	
  	+	$$
  	+	P1(x1, 0, z1) P2(x2, 0, z2)
