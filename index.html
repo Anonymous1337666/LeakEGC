@@ -5,6 +5,8 @@
 	</head>
 	<body>
 		<p> Showing modification from [2022/11/18 19:06]</p><p></p>
+run:
+<p></p>
 <p>===== Tema 2 - Car Race =====</p>
 <p>   * **Responsabili:**</p>
 <p>   * **Lansare:** 21 noiembrie 2022</p>
@@ -16,7 +18,7 @@
 <p> </p>
 <p> Puteți viziona un demo construit pe baza frameworkului de laborator care acoperă cerințele detaliate mai jos.</p>
 <p> </p>
-			{% include youtube.html id="j_0LpAHX_Dc" %}
+{% include youtube.html id="j_0LpAHX_Dc" %}
 <p> </p>
 <p> <note>Curbura terenului este doar un **efect vizual**. Toate calculele, împreună cu generarea geometriei tuturor obiectelor din scenă se realizează într-un spațiu în care nu se ține cont de curbură. </note></p>
 <p> </p>
@@ -27,7 +29,7 @@
 <p> Pentru a genera o pistă pe care să meargă mașina este nevoie inițial de o mulțime de puncte care să o definească. Mulțimea este formată din puncte în planul XOZ (2D) și poate fi obținută folosind orice tool (chiar și foaia si pixul). Pentru exemplul următor s-a folosit Geogebra (https://www.geogebra.org/classic).</p>
 <p> \\</p>
 <p> \\</p>
-<p> {{ :egc:teme:2022:punctalapista.png?700 | }}</p>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/punctalapista.png" width=0>
 <p> \\</p>
 <p> \\</p>
 <p> <note important></p>
@@ -36,18 +38,18 @@
 <p>   - să fie o curbă concavă</p>
 <p> </note></p>
 <p> </p>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/concaveconvex.png" width=400>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/concaveconvex.png" width=0>
 <p> </p>
 <p> Prin urmare următoarele 2 multimi de puncte nu generează o pistă corectă:</p>
 <p> \\</p>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/traseudrept.png" width=200>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/traseuconvex.png" width=300>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/traseudrept.png" width=0>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/traseuconvex.png" width=0>
 <p> \\</p>
 <p> </p>
 <p> Totuși pentru a genera pista (o suprafață 2D) este nevoie de 2 mulțimi de puncte: una interioară și una exterioară. Fiecare segment exterior este (aproximativ) paralel cu omologul lui din interior.</p>
 <p> </p>
 <p> \\</p>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/multimepuncteextint.png" width=300>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/multimepuncteextint.png" width=0>
 <p> \\</p>
 <p> </p>
 <p> Aceste 2 mulțimi se pot obține folosind tool-urile deja discutate însă este destul de costisitor la nivel de timp. O soluție mai elegantă este prezentată în secțiunea următoare unde de la o mulțime de puncte putem genera oricâte mulțimi de puncte paralele la mulțimea inițială (paralelism la nivel de segmente).</p>
@@ -76,20 +78,20 @@
 <p> $$</p>
 <p> </p>
 <p> \\</p>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/newgenpunct.png" width=400>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/newgenpunct.png" width=0>
 <p> \\</p>
 <p> </p>
 <p> Astfel dacă aplicăm același lucru pentru mai multe segmente obținem noile mulțimi de puncte exterioare / interioare:</p>
 <p> </p>
 <p> \\</p>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/newgenpuncte.png" width=400>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/newgenpuncte.png" width=0>
 <p> \\</p>
 <p> === Generare geometrie pistă ===</p>
 <p> </p>
 <p> Având cele 2 mulțimi (exterioară și interioară) putem să construim suprafața pistei. Presupunem că avem punctele exterioare r1, r2, r3 și cele interioare a1, a2, a3. Trebuie să se construiască cele 4 triunghiuri (r1, a1, a2), (r1, a2, r2), (r2, a2, a3). (r2, a3, r3).</p>
 <p> </p>
 <p> \\</p>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/new_traseu.png" width=400>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/new_traseu.png" width=0>
 <p> \\</p>
 <p> </p>
 <p> Astfel dacă aplicăm același lucru pentru toate punctele din ambele mulțimi obținem pista.</p>
@@ -112,11 +114,11 @@
 <p> Perspectiva jucătorului va fi una **third-person**, deci vom avea camera poziționată în spatele mașinii, uitându-se spre aceasta.</p>
 <p> Pentru un control cât mai fluid, vom dori ca mașina să rămână centrată pe direcția camerei, deci la apăsarea tastelor A-D se va face atât o rotație a mașinii, cât și o rotație a camerei:</p>
 <p> </p>
-<p> {{ :egc:teme:2022:lateral_rot_example.gif?direct&400 |}}</p>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/lateral_rot_example.gif" width=0>
 <p> </p>
 <p> Deplsarea față-spate (W-S) va implica mișcarea mașinii în funcție de rotația camerei, astfel încât comportamentul dorit să fie asemănător cu exemplul de mai jos:</p>
 <p> </p>
-<p> {{ :egc:teme:2022:direction_change.gif?direct&400 |}}</p>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/direction_change.gif" width=0>
 <p> </p>
 <p> <note tip>**Hint:**</p>
 <p> </p>
@@ -129,7 +131,7 @@
 <p> </p>
 <p> Utilizând ambele tehnici (rotația mașinii și deplasarea folosind vectorul forward al camerei), rezultatul final arată așa:</p>
 <p> </p>
-<p> {{ :egc:teme:2022:final_control.gif?direct&400 |}}</p>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/final_control.gif" width=0>
 <p> </p>
 <p> === Verificare mașină dacă se află pe pistă ===</p>
 <p> </p>
@@ -152,7 +154,7 @@
 <p> </p>
 <p> Pentru a avea niște interacțiune cu mașiniile inamice, va trebui să le puteți "detecta". Această detectare presupune o verificare a poziției mașinii jucătorului în raport cu fiecare mașină inamică. Pentru a realiza acest lucru, cel mai simplu mod pe care vi-l recomandăm este o verificare de coliziune [[https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection|sferă-sferă]]:</p>
 <p> </p>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/sphere_sphere_col.png" width=440>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/sphere_sphere_col.png" width=0>
 <p> </p>
 <p> În cazul nostru particular, sferele ar avea centrul în centrul mașinii, iar raza acesteia presupune distanță de verificare de coliziune.</p>
 <p> </p>
@@ -162,7 +164,7 @@
 <p> </p>
 <p> În esență, un minimap nu reprezintă altceva decât un alt viewport unde trebuie să randați aceeași scenă iarăși (vezi [[https://ocw.cs.pub.ro/courses/egc/laboratoare/04|lab 4]]), dar văzută de sus (**Hint:** Din moment ce se cere o astfel de perspectiva, mai citiți o dată tipurile de perspective prezentate în [[https://ocw.cs.pub.ro/courses/egc/laboratoare/05|Laboratorul 5]])</p>
 <p> </p>
-<p> {{ :egc:teme:2022:minimap_ex.gif?direct&400 |}}</p>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/minimap_ex.gif" width=0>
 <p> </p>
 <p> <note important>**Atenție!** Observați că rotația camerei nu se mai păstrează, dar deplasarea ei în funcție de jucător **da**!</note></p>
 <p> </p>
@@ -186,13 +188,13 @@
 <p> </p>
 <p> Deoarece realizarea curburii terenului este un proces ce modifică pozițiile vertecșilor, rezultatul vizual este influențat de densitatea de triunghiuri ale terenului. Cu cât terenul are o densitate mai mare de triunghiuri, cu atât efectul de curbura este mai natural. O densitate mică produce un rezultat vizual mai 'pătrățos'. O comparație între rezultatele celor două poate fi vizualizată mai jos. În stânga este prezentat rezultatul pentru o densitate mică și în dreapta pentru o densitate mare.</p>
 <p> </p>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/triangle_density.png" width=640>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/triangle_density.png" width=0>
 <p> </p>
 <p> În plus, geometria terenului de iarbă poate trece prin geometria pistei pentru o densitate mică de triunghiuri, așa cum se poate vedea mai sus în stânga.</p>
 <p> </p>
 <p> Pentru a elimina aceste artefacte vizuale, este necesară generarea terenului de iarbă și a pistei cu o densitate mare de triunghiuri. De exemplu, pentru geometria pistei din demo, o comparație între geometria celor două rezultate de mai sus este după cum urmează. Geometria pistei a fost generată conform descrierii de mai sus.</p>
 <p> </p>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/triangle_density2.png" width=640>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/triangle_density2.png" width=0>
 <p> </p>
 <p> </p>
 <p> ==== Funcționalități obligatorii (150 puncte) ====</p>
