@@ -4,17 +4,16 @@
 		<title> Leak </title>
 	</head>
 	<body>
-		<p> Showing modification from [2022/11/18 19:06]</p><p></p><p></p>
+		<p> Showing modification from [2022/11/19 17:13] </p><p></p><p></p>
 		<p> Use https://www.hostmath.com/ in order to properly see formulae. I was too lazy to format those.</p
-<p></p>
-<p>===== Tema 2 - Car Race =====</p>
-<p>   * **Responsabili:**</p>
+<p> ===== Tema 2 - Car Race =====</p>
+<p>   * **Responsabili:** Vlad Drăghici, Cristi Lambru, Bogdan Vasile</p>
 <p>   * **Lansare:** 21 noiembrie 2022</p>
 <p>   * **Termen de predare:** 14 decembrie 2022, ora 23:59</p>
 <p>   * **Regulament:** <a href="https://ocw.cs.pub.ro/courses/egc/teme/regulament"> EGC regulament </a></p>
 <p>   * **Notă: Orice informație ce nu a fost acoperită în acest document este la latitudinea voastră!**</p>
 <p> </p>
-<p> În cadrul temei 2, veți avea de implementat un joc de curse de mașini parțial. Va trebui să creați pista cursei, controlul mașinii pe pistă, un set de obstacole dinamice ce vor avea un traseu predefinit pe pista și vor substitui mașinile adversare cu care se realizează întrecerea și un efect de curbură a pistei din poziția mașinii.</p>
+<p> În cadrul temei 2, veți avea de implementat un joc de curse de mașini parțial. Va trebui să creați pista cursei, controlul mașinii pe pistă, un set de obstacole dinamice ce vor avea un traseu predefinit pe pistă și vor substitui mașinile adversare cu care se realizează întrecerea și un efect de curbură a pistei din poziția mașinii.</p>
 <p> </p>
 <p> Puteți viziona un demo construit pe baza frameworkului de laborator care acoperă cerințele detaliate mai jos.</p>
 <p> </p>
@@ -25,80 +24,95 @@
 <p> </p>
 <p> </p>
 <p> ==== Pista cursei ====</p>
-<p> \\</p>
-<p> Pentru a genera o pistă pe care să meargă mașina este nevoie inițial de o mulțime de puncte care să o definească. Mulțimea este formată din puncte în planul XOZ (2D) și poate fi obținută folosind orice tool (chiar și foaia si pixul). Pentru exemplul următor s-a folosit Geogebra (https://www.geogebra.org/classic).</p>
-<p> \\</p>
-<p> \\</p>
+<p> </p>
+<p> Pentru a genera o pistă pe care să meargă mașina, este nevoie inițial de o mulțime de puncte care să o definească. Mulțimea este formată din puncte în planul XOZ (2D) și poate fi obținută folosind orice tool (chiar și foaia si pixul). Pentru exemplul următor s-a folosit Geogebra (https://www.geogebra.org/classic).</p>
+<p> </p>
 <img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/punctalapista.png" width=700>
-<p> \\</p>
-<p> \\</p>
+<p> </p>
 <p> <note important></p>
 <p> Pista trebuie să respecte 2 condiții:</p>
-<p>   - să nu existe niciun unghi drept între oricare 2 segmente consecutive</p>
-<p>   - să fie o curbă concavă</p>
+<p>   - Să nu existe niciun unghi drept între oricare 2 segmente consecutive</p>
+<p>   - Să fie o curbă concavă</p>
+<p> </p>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/concave.png" width=600>
+<p> </p>
+<p> De exemplu, cele 3 mulțimi de puncte din partea dreaptă de mai sus nu sunt permise.</p>
+<p> </p>
 <p> </note></p>
 <p> </p>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/concaveconvex.png" width=400>
+<p> === Generare geometrie pistă ===</p>
 <p> </p>
-<p> Prin urmare următoarele 2 multimi de puncte nu generează o pistă corectă:</p>
-<p> \\</p>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/traseudrept.png" width=200>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/traseuconvex.png" width=300>
-<p> \\</p>
 <p> </p>
-<p> Totuși pentru a genera pista (o suprafață 2D) este nevoie de 2 mulțimi de puncte: una interioară și una exterioară. Fiecare segment exterior este (aproximativ) paralel cu omologul lui din interior.</p>
-<p> </p>
-<p> \\</p>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/multimepuncteextint.png" width=300>
-<p> \\</p>
-<p> </p>
-<p> Aceste 2 mulțimi se pot obține folosind tool-urile deja discutate însă este destul de costisitor la nivel de timp. O soluție mai elegantă este prezentată în secțiunea următoare unde de la o mulțime de puncte putem genera oricâte mulțimi de puncte paralele la mulțimea inițială (paralelism la nivel de segmente).</p>
-<p> </p>
-<p> === Generare puncte pistă ===</p>
+<p> Geometria pistei de curse trebuie generată prin asamblare din cod. Nu se poate crea geometria într-un software extern si importa in aplicatie.</p>
 <p> </p>
 <p> <note></p>
-<p> Explicația care urmează este o recomandare de generare a geometriei pistei, dar aceasta poate fi realizată în orice fel, atât timp cât sunt respectate cele 2 criterii.</p>
+<p> </p>
+<p> Explicația care urmează este o recomandare de generare a geometriei pistei, dar aceasta poate fi asamblata în orice fel, atât timp cât sunt respectate cele 2 restrictii.</p>
 <p> </note></p>
 <p> </p>
+<p> Generarea pistei de curse se realizează conform pașilor de mai jos. O reprezentare vizuală a rezultatelor este prezentată în continuare.</p>
+<p>   - Se creează punctele unui poligon ce definește pista de curse. Noi am folosit Geogebra.</p>
+<p>   - Se creează două seturi de puncte suplimentare, în interiorul și exteriorul poligonului ce  definește pista. Punctele se pot crea de-alungul perpendicularei fiecărui segment. Acest proces este detaliat mai jos.</p>
+<p>   - Se creeaza muchiile dintre punctele poligoanului interior și exterior.</p>
+<p>   - Se generează triunghiurile dintre punctele celor două poligoane. Triunghiurile se creează într-un singur obiect de tip mesh.</p>
+<p> </p>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/geometry_generation.png" width=500>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> Pentru a genera geometria pistei (o suprafață 2D), este nevoie de 2 mulțimi de puncte: una interioară și una exterioară. Fiecare segment exterior este (aproximativ) paralel cu omologul lui din interior.</p>
+<p> </p>
+<p> </p>
+<p> </p>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/multimepuncteextint.png" width=200>
+<p> </p>
+<p> Aceste 2 mulțimi se pot obține folosind tool-urile deja discutate, însă este destul de costisitor la nivel de timp. O soluție mai elegantă este prezentată în continuare, unde de la o mulțime de puncte putem genera oricâte mulțimi de puncte paralele cu mulțimea inițială (paralelism la nivel de segmente).</p>
+<p> </p>
+<p> </p>
 <p> Să presupunem că avem 2 puncte consecutive P1(x1, 0, z1), P2(x2, 0, z2) din mulțimea de puncte care definește traseul:</p>
-<p>   - se determină vectorul direcție de la P1 către P2 notat D (negru in poza).</p>
-<p>   - se determină vectorul perpendicular la D notat P (verde in poza): P = cross(D, UP), UP fiind vectorul perpendicular la planul XOZ.</p>
-<p>   - folosind vectorul P și P1 putem să obtinem punctele exterioare / interioare (Roșu și Albastru): R = P1 + distRoșu * P, A = P1 - distAlbastru * P.</p>
+<p>   - Se determină vectorul direcție de la P1 către P2 notat D (negru in poza).</p>
+<p>   - Se determină vectorul perpendicular la D notat P (verde in poza): P = cross(D, UP), UP fiind vectorul perpendicular la planul XOZ.</p>
+<p>   - Folosind vectorul P și P1 putem să obținem punctele exterioare / interioare (Roșu și Albastru): R = P1 + distRoșu * P, A = P1 - distAlbastru * P.</p>
 <p> </p>
 <p> $$</p>
 <p> P1(x1, 0, z1) P2(x2, 0, z2)</p>
 <p> \\</p>
 <p> \vec{D} = P2 - P1</p>
 <p> \\</p>
-<p> \vec{P} = cross(\vec{D}, \vec{U}P), \vec{UP} = (0, 1, 0)</p>
+<p> \vec{P} = cross(\vec{D}, \vec{UP}), \vec{UP} = (0, 1, 0)</p>
 <p> \\</p>
 <p> R = P1 + distRoșu * \vec{P}</p>
 <p> \\</p>
 <p> A = P1 - distAlbastru * \vec{P}</p>
 <p> $$</p>
 <p> </p>
-<p> \\</p>
-<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/newgenpunct.png" width=400>
-<p> \\</p>
 <p> </p>
-<p> Astfel dacă aplicăm același lucru pentru mai multe segmente obținem noile mulțimi de puncte exterioare / interioare:</p>
+<img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/genpunctnewdrept.png" width=400>
 <p> </p>
-<p> \\</p>
+<p> </p>
+<p> Astfel, dacă aplicăm același lucru pentru mai multe segmente, obținem noile mulțimi de puncte exterioare / interioare:</p>
+<p> </p>
+<p> </p>
 <img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/newgenpuncte.png" width=400>
-<p> \\</p>
-<p> === Generare geometrie pistă ===</p>
 <p> </p>
-<p> Având cele 2 mulțimi (exterioară și interioară) putem să construim suprafața pistei. Presupunem că avem punctele exterioare r1, r2, r3 și cele interioare a1, a2, a3. Trebuie să se construiască cele 4 triunghiuri (r1, a1, a2), (r1, a2, r2), (r2, a2, a3). (r2, a3, r3).</p>
 <p> </p>
-<p> \\</p>
+<p> Având cele 2 mulțimi (exterioară și interioară), putem să construim suprafața pistei. Presupunem că avem punctele exterioare r1, r2, r3 și cele interioare a1, a2, a3. Trebuie să se construiască cele 4 triunghiuri (r1, a1, a2), (r1, a2, r2), (r2, a2, a3). (r2, a3, r3).</p>
+<p> </p>
+<p> </p>
 <img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/new_traseu.png" width=400>
-<p> \\</p>
 <p> </p>
-<p> Astfel dacă aplicăm același lucru pentru toate punctele din ambele mulțimi obținem pista.</p>
+<p> </p>
+<p> Astfel, dacă aplicăm același lucru pentru toate punctele din ambele mulțimi obținem pista.</p>
+<p> </p>
+<p> </p>
+<p> O posibilă generare mai bună utilizează media perpendicularelor pe 2 segmente consecutive pentru a crea punctele de pe cele două poligoane, interior și exterior.</p>
+<p> </p>
 <p> </p>
 <p> === Deplasare obstacole dinamice ===</p>
 <p> </p>
-<p> Pe pistă pe lângă mașina jucătorului trebuie să se miște și alte mașini (adversari). Aceștia se mișcă pe un traseu predefinit paralel cu mulțimea generatoare de pistă. Acest traseu se poate obține cu tehnica prezentată mai sus.</p>
+<p> </p>
+<p> </p>
+<p> Pe pistă, pe lângă mașina jucătorului, trebuie să se miște și alte mașini (adversari). Aceștia se mișcă pe un traseu predefinit paralel cu mulțimea generatoare de pistă. Acest traseu se poate obține cu tehnica prezentată mai sus.</p>
 <p> </p>
 <p> === Generare copăcei lângă pistă ===</p>
 <p> </p>
@@ -106,7 +120,7 @@
 <p> </p>
 <p> === Control mașină ===</p>
 <p> </p>
-<p> Dintre toate mașiniile create pe pistă, una dintre ele va trebui să o alegeți ca fiind mașina jucătorului. </p>
+<p> Dintre toate mașinile create pe pistă, una dintre ele va trebui să o alegeți ca fiind mașina jucătorului. </p>
 <p> Aceasta poate fi controlată folosind tastele **W, A, S, D**, unde W-S reprezintă mișcarea față-spate, iar A-D va schimba orientarea mașinii (detaliat mai jos).</p>
 <p> </p>
 <p> ==== Control cameră ====</p>
@@ -124,7 +138,7 @@
 <p> </p>
 <p> **1)** Calculele de deplasare și rotație pot deveni destul de complicate destul de repede, de aceea vă recomandăm să lucrați cu vectori, pornind de la exemplele și teoria din [[https://ocw.cs.pub.ro/courses/egc/laboratoare/04|Laboratorul 4]].</p>
 <p> </p>
-<p> **2)** Pentru deplasarea față-spate (W-S), va recomandăm folosirea vectorilor camerei (în cazul acesta, vectorul **forward**) pentru a afla direcția de deplasare a mașinii.</p>
+<p> **2)** Pentru deplasarea față-spate (W-S), vă recomandăm folosirea vectorilor camerei (în cazul acesta, vectorul **forward**) pentru a afla direcția de deplasare a mașinii.</p>
 <p> </p>
 <p> **Exemplu:** Din moment ce camera își schimbă vectorul de forward la rotația pe OY ([[https://ocw.cs.pub.ro/courses/egc/laboratoare/05|lab 5]]), o  soluție ar fi folosirea acesteia pentru direcția de deplasare.</p>
 <p> </note></p>
@@ -180,7 +194,18 @@
 <p> Pos_{v_y} = Pos_{v_y} - \|{Pos_{car}-Pos_v}\|^2 \cdot scaleFactor</p>
 <p> $$</p>
 <p> </p>
-<p> <note important>Atenție! Toate aceste calcule se realizează în **spațiul lume**.</note></p>
+<p> </p>
+<p> <note tip></p>
+<p>   * Posv</p>
+<p>- poziția în spațiul lume a vertexului procesat de vertex shader</p>
+<p>   * Poscar</p>
+<p>- poziția în spațiul lume a mașinii controlate de jucător</p>
+<p>   * Posvy</p>
+<p>- componenta y a vertexului</p>
+<p>   * scaleFactor</p>
+<p>- un factor de scalare ce controlează curbura terenului</p>
+<p> </note></p>
+<p> </p>
 <p> </p>
 <p> Factorul de scalare este proporțional cu dimensiunea obiectelor din scenă. Pentru demo-ul de mai sus, unde lățimea mașinii este de 1 unitate, a fost folosit un factor de scalare de 0.03.</p>
 <p> </p>
@@ -192,7 +217,7 @@
 <p> </p>
 <p> În plus, geometria terenului de iarbă poate trece prin geometria pistei pentru o densitate mică de triunghiuri, așa cum se poate vedea mai sus în stânga.</p>
 <p> </p>
-<p> Pentru a elimina aceste artefacte vizuale, este necesară generarea terenului de iarbă și a pistei cu o densitate mare de triunghiuri. De exemplu, pentru geometria pistei din demo, o comparație între geometria celor două rezultate de mai sus este după cum urmează. Geometria pistei a fost generată conform descrierii de mai sus.</p>
+<p> Pentru a elimina aceste artefacte vizuale, este necesară generarea terenului de iarbă și a pistei cu o densitate mare de triunghiuri. De exemplu, o comparație între geometria celor două rezultate de mai sus este după cum urmează. Geometria pistei a fost generată conform descrierii de mai sus.</p>
 <p> </p>
 <img src="https://ocw.cs.pub.ro/courses/_media/egc/teme/2022/triangle_density2.png" width=640>
 <p> </p>
@@ -220,6 +245,15 @@
 <p>   * Curbură teren 20p</p>
 <p>     * Efect de curbură din shader 10p</p>
 <p>     * Generare geometrie teren cu o densitate mare de triunghiuri 10p</p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> <note warning></p>
+<p> </p>
+<p> **Atenție!** Nerespectarea celor 2 restricții în generarea pistei de curse, 1. să nu existe niciun unghi drept între oricare 2 segmente consecutive, 2. să aibă formă concavă, atrage după sine nepunctarea elementelor ce utilizează informația pistei.</p>
+<p> </p>
+<p> </note></p>
+<p> </p>
 <p> </p>
 <p> ==== Exemple de funcționalități bonus ====</p>
 <p> <note warning>Orice funționalitate suplimentară implementată (care nu este inclusă în cerințele obligatorii) poate fi considerată ca punctaj bonus dacă este suficient de complexă. Funcționlitățile bonus se iau în considerare doar dacă funcționalitățile obligatorii au fost realizate.</note></p>
